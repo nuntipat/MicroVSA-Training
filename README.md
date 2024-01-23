@@ -1,11 +1,12 @@
 # MicroVSA Model Training
 
-This repository contain the model training and converting script for the binary LDC classifier and MCU-optimized LDC classifier described in the paper "MicroVSA: An Ultra-Lightweight Vector Symbolic Architecture-based Classifier Library for Always-On Inference on Tiny Microcontrollers".
+This repository contains the model training and conversion scripts for the binary LDC classifier and MCU-optimized LDC classifier described in the paper "MicroVSA: An Ultra-Lightweight Vector Symbolic Architecture-based Classifier Library for Always-On Inference on Tiny Microcontrollers".
 
 ## Prerequisite
 
 - Python >=3.8
 - virtualenv
+- Nvidia GPU (optional but recommended)
 
 ## Dataset Preparation
 
@@ -69,7 +70,7 @@ data/
 
 ## Usage
 
-1. Create a Python virtual environment and setup all dependencies
+1. Create a Python virtual environment and install all dependencies
 
     ```
     $ virtualenv -p python3 venv
@@ -85,20 +86,20 @@ data/
 
 3. Train the model
 
-    Option 1) automatically train all models
+    Option 1) automatically train some representative models (N rounds for each model) and report the best accuracy 
 
     ```
-    $ ./train.sh
+    $ ./train.sh <N>
     ```
 
-    Option 2) train a model on a specific dataset with custom parameters e.g. the following command train five MCU-optimized LDC models (Df=64) on the UCI Human Activity Recognition Dataset. The training script saves all trained models in the `result` directory and report the best accuracy.
+    Option 2) train a model on a specific dataset with custom parameters, e.g., the following command trains five MCU-optimized LDC models (Df = 64) on the UCI Human Activity Recognition Dataset. The training script saves all trained models in the `result` directory and reports the best accuracy
 
     ```bash
     # run `python train.py -h` to view all options
     $ python train.py -d har -n 5 -df 64
     ```
 
-    The `result` directory contains the model in npy format, training log (log.txt) and image of the confusion matrix (result.png)
+    The `result` directory contains the model in npy format, the training log (log.txt), and an image of the confusion matrix (result.png)
 
     ```
     data/
@@ -116,7 +117,7 @@ data/
     ...
     ```
 
-4. Convert the trained model to C source/header file for deploying on the MCU
+4. Convert the trained model to a C source and header file for deployment on the MCU
 
     ```bash
     # run `python model_converter.py -h` to view all options
