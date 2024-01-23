@@ -1,0 +1,13 @@
+numpy
+scipy==1.10
+pandas
+matplotlib
+librosa
+hydra-core
+omegaconf
+tqdm
+tensorflow
+torch
+torchvision 
+torchaudio
+seaborn
