@@ -10,6 +10,9 @@ This repository contains the model training and conversion scripts for the binar
 
 ## Dataset Preparation
 
+> [!NOTE]
+> To aid in the artifact evaluation process, we temporarily made all datasets available at this [link](https://igatcoth-my.sharepoint.com/:u:/g/personal/nuntipat_igat_co_th/Edn02ELWPXVDoNHeq1JvndUBbYfHTu5jntelX_oqn6gqnw?e=n0feYQ). Simply download and replace the data directory with the version in the zip file, and skip the `prepare_dataset.sh` script.
+
 1. PTB Diagnostic ECG Database *(A free Kagger's account is required to download this dataset)*
     1. Download the dataset from [link](https://www.kaggle.com/datasets/shayanfazeli/heartbeat/data)
     2. Unzip and copy the `ptbdb_normal.csv` and `ptbdb_abnormal.csv` to `data/ptb_ecg`
