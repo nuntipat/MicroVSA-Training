@@ -40,10 +40,10 @@ def get_ptb_ecg(show_stats=False):
 
 
 def get_ucihar(show_stats=False):
-    test_data = pd.read_csv('data/ucihar/X_test.txt', delim_whitespace=True, header=None)
-    test_label = pd.read_csv('data/ucihar/y_test.txt', delim_whitespace=True, header=None)
-    train_data = pd.read_csv('data/ucihar/X_train.txt', delim_whitespace=True, header=None)
-    train_label = pd.read_csv('data/ucihar/y_train.txt', delim_whitespace=True, header=None)
+    test_data = pd.read_csv('data/ucihar/X_test.txt', sep='\s+', header=None)
+    test_label = pd.read_csv('data/ucihar/y_test.txt', sep='\s+', header=None)
+    train_data = pd.read_csv('data/ucihar/X_train.txt', sep='\s+', header=None)
+    train_label = pd.read_csv('data/ucihar/y_train.txt', sep='\s+', header=None)
     
     x_test = test_data.values
     y_test = test_label.values

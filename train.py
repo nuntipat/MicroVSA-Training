@@ -356,7 +356,7 @@ def train_wisdm(verbose=True, save_model=True, enable_binarize=True, save_model_
         log_file = sys.stdout
         result_img_path = None
 
-    x_train, y_train, x_val, y_val, x_test, y_test = dataset.get_wisdm(True)
+    x_train, y_train, x_val, y_val, x_test, y_test = dataset.get_wisdm()
     x_train = (x_train / 80.0) + 0.5
     x_val = (x_val / 80.0) + 0.5
     x_test = (x_test / 80.0) + 0.5
