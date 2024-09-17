@@ -178,7 +178,7 @@ def eval_ldc(F, V, C, x_test, y_test, input_min, input_max, binarize=True, verbo
     return acc, confusion_matrix_normalize
 
 
-def train_ptb_ecg(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/ptb', fhv_dimension=64):
+def train_ptb_ecg(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/ptb', vhv_dimension=8, fhv_dimension=64, initial_weight_dir=None):
     if save_model:
         os.makedirs(save_model_dir, exist_ok=True)
         log_file = open(f'{save_model_dir}/log.txt', 'w')
@@ -190,7 +190,7 @@ def train_ptb_ecg(verbose=True, save_model=True, enable_binarize=True, save_mode
     x_train, y_train, x_val, y_val = dataset.get_ptb_ecg()
 
     F, V, C = train_ldc(x_train, y_train, x_val, y_val,
-                        vhv_dimension=8,
+                        vhv_dimension=vhv_dimension,
                         fhv_dimension=fhv_dimension,
                         num_feature=187,
                         num_value=256,
@@ -221,7 +221,7 @@ def train_ptb_ecg(verbose=True, save_model=True, enable_binarize=True, save_mode
     return acc, cm
 
 
-def train_ucihar(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/ucihar', fhv_dimension=64):
+def train_ucihar(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/ucihar', vhv_dimension=8, fhv_dimension=64):
     if save_model:
         os.makedirs(save_model_dir, exist_ok=True)
         log_file = open(f'{save_model_dir}/log.txt', 'w')
@@ -233,7 +233,7 @@ def train_ucihar(verbose=True, save_model=True, enable_binarize=True, save_model
     x_train, y_train, x_val, y_val = dataset.get_ucihar()
 
     F, V, C = train_ldc(x_train, y_train, x_val, y_val,
-                        vhv_dimension=8,
+                        vhv_dimension=vhv_dimension,
                         fhv_dimension=fhv_dimension,
                         num_feature=561,
                         num_value=256,
@@ -263,7 +263,7 @@ def train_ucihar(verbose=True, save_model=True, enable_binarize=True, save_model
     return acc, cm
 
 
-def train_qksd(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/hey_snapdragon', fhv_dimension=64):
+def train_qksd(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/hey_snapdragon', vhv_dimension=8, fhv_dimension=64):
     if save_model:
         os.makedirs(save_model_dir, exist_ok=True)
         log_file = open(f'{save_model_dir}/log.txt', 'w')
@@ -275,7 +275,7 @@ def train_qksd(verbose=True, save_model=True, enable_binarize=True, save_model_d
     x_train, y_train, x_val, y_val = dataset.get_qksd()
 
     F, V, C = train_ldc(x_train, y_train, x_val, y_val,
-                        vhv_dimension=8,
+                        vhv_dimension=vhv_dimension,
                         fhv_dimension=fhv_dimension,
                         num_feature=810,
                         num_value=256,
@@ -305,7 +305,7 @@ def train_qksd(verbose=True, save_model=True, enable_binarize=True, save_model_d
     return acc, cm
 
 
-def train_fsdd(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/fsdd', fhv_dimension=64):
+def train_fsdd(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/fsdd', vhv_dimension=8, fhv_dimension=64):
     if save_model:
         os.makedirs(save_model_dir, exist_ok=True)
         log_file = open(f'{save_model_dir}/log.txt', 'w')
@@ -317,7 +317,7 @@ def train_fsdd(verbose=True, save_model=True, enable_binarize=True, save_model_d
     x_train, y_train, x_val, y_val = dataset.get_fsdd()
 
     F, V, C = train_ldc(x_train, y_train, x_val, y_val,
-                        vhv_dimension=8,
+                        vhv_dimension=vhv_dimension,
                         fhv_dimension=fhv_dimension,
                         num_feature=800,
                         num_value=256,
@@ -347,7 +347,7 @@ def train_fsdd(verbose=True, save_model=True, enable_binarize=True, save_model_d
     return acc, cm
 
 
-def train_wisdm(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/widsm', fhv_dimension=64):
+def train_wisdm(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/widsm', vhv_dimension=8, fhv_dimension=64):
     if save_model:
         os.makedirs(save_model_dir, exist_ok=True)
         log_file = open(f'{save_model_dir}/log.txt', 'w')
@@ -363,7 +363,7 @@ def train_wisdm(verbose=True, save_model=True, enable_binarize=True, save_model_
     # print(f'X Range : {np.min(x_train)} {np.max(x_train)}')
 
     F, V, C = train_ldc(x_train, y_train, x_val, y_val,
-                        vhv_dimension=8,
+                        vhv_dimension=vhv_dimension,
                         fhv_dimension=fhv_dimension,
                         num_feature=144,
                         num_value=256,
@@ -394,7 +394,7 @@ def train_wisdm(verbose=True, save_model=True, enable_binarize=True, save_model_
     return acc, cm
 
 
-def train_st_handpose(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/st_handpose', fhv_dimension=64):
+def train_st_handpose(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/st_handpose', vhv_dimension=8, fhv_dimension=64):
     if save_model:
         os.makedirs(save_model_dir, exist_ok=True)
         log_file = open(f'{save_model_dir}/log.txt', 'w')
@@ -409,7 +409,7 @@ def train_st_handpose(verbose=True, save_model=True, enable_binarize=True, save_
     # print(f'X Range : {np.min(x_train)} {np.max(x_train)}')
 
     F, V, C = train_ldc(x_train, y_train, x_val, y_val,
-                        vhv_dimension=8,
+                        vhv_dimension=vhv_dimension,
                         fhv_dimension=fhv_dimension,
                         num_feature=128,
                         num_value=256,
@@ -444,7 +444,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Training the binary LDC model or the MCU-optimized LDC model')
     parser.add_argument('-d', '--dataset-name', choices=['ptb', 'qksd', 'har', 'fsdd', 'wisdm', 'sthand'], required=True, help='name of the dataset')
     parser.add_argument('-n', '--num-rounds', type=int, default=5, help='number of rounds to train the model')
-    parser.add_argument('-df', '--f-dim', type=int, default=8, help='dimension of the V, F and C vector (Df in the paper)')
+    parser.add_argument('-dv', '--v-dim', type=int, default=8, help='dimension of the V vector (Dv in the paper)')
+    parser.add_argument('-df', '--f-dim', type=int, default=8, help='dimension of the F and C vector (Df in the paper)')
     parser.add_argument('--use-sgn', action='store_true', help='train the binary LDC model (default to MCU-optimized LDC model if --use-sgn is not found)')
     args = parser.parse_args()
 
@@ -460,7 +461,7 @@ if __name__ == '__main__':
     all_accuracy = []
     for i in range(args.num_rounds):
         print (f'Training #{i+1}/{args.num_rounds}...')
-        acc, cm = model_fn[args.dataset_name](fhv_dimension=args.f_dim, save_model=True, verbose=True, 
+        acc, cm = model_fn[args.dataset_name](vhv_dimension=args.v_dim, fhv_dimension=args.f_dim, save_model=True, verbose=True, 
                                               enable_binarize=args.use_sgn, 
                                               save_model_dir=f"result/{args.dataset_name}_d{args.f_dim}{'s' if args.use_sgn else ''}_{i+1}")
         all_accuracy.append(acc)
