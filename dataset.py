@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import torchvision
 
 rng = np.random.default_rng()
 
@@ -18,6 +19,31 @@ def print_stats(x_train, y_train, x_test, y_test):
     for i in range(num_class):
         print(f'    class {i} : {x_test[y_test == i].shape[0]}')
 
+def get_mnist(show_stats=False):
+    train_set = torchvision.datasets.MNIST(
+        root='./data/mnist/',
+        train=True,
+        download=False
+    )
+
+    test_set = torchvision.datasets.MNIST(
+        root='./data/mnist/',
+        train=False,
+        download=False
+    )
+    
+    x_train = train_set.data.numpy().astype(np.float32)
+    x_train = x_train.reshape((x_train.shape[0], -1))
+
+    x_test = test_set.data.numpy().astype(np.float32)
+    x_test = x_test.reshape((x_test.shape[0], -1))
+    
+    y_train = train_set.targets.numpy()
+    y_test = test_set.targets.numpy()
+
+    if show_stats:
+        print_stats(x_train, y_train, x_test, y_test)
+    return (x_train, y_train, x_test, y_test)
 
 def get_ptb_ecg(show_stats=False):
     normal = np.loadtxt('data/ptb_ecg/ptbdb_normal.csv', delimiter=',')

@@ -2,3 +2,4 @@ venv/
 result/
 *.pth
 data/MS-SNSD-master
+__pycache__
