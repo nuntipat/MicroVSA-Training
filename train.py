@@ -569,6 +569,7 @@ if __name__ == '__main__':
     parser.add_argument('-dv', '--v-dim', type=int, default=8, help='dimension of the V vector (Dv in the paper)')
     parser.add_argument('-df', '--f-dim', type=int, default=8, help='dimension of the F and C vector (Df in the paper)')
     parser.add_argument('--use-sgn', action='store_true', help='train the binary LDC model (default to MCU-optimized LDC model if --use-sgn is not found)')
+    parser.add_argument('--no-save', action='store_false', help='do not save the model')
     args = parser.parse_args()
 
     model_fn = {
@@ -586,7 +587,7 @@ if __name__ == '__main__':
     all_accuracy = []
     for i in range(args.num_rounds):
         print (f'Training #{i+1}/{args.num_rounds}...')
-        acc, cm = model_fn[args.dataset_name](vhv_dimension=args.v_dim, fhv_dimension=args.f_dim, save_model=True, verbose=True, 
+        acc, cm = model_fn[args.dataset_name](vhv_dimension=args.v_dim, fhv_dimension=args.f_dim, save_model=args.no_save, verbose=True, 
                                               enable_binarize=args.use_sgn, 
                                               save_model_dir=f"result/{args.dataset_name}_d{args.f_dim}{'s' if args.use_sgn else ''}_{i+1}")
         all_accuracy.append(acc)
