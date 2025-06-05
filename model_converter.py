@@ -50,6 +50,12 @@ if __name__ == '__main__':
     V = np.load(os.path.join(args.input_dir, 'V.npy'))
     C = np.load(os.path.join(args.input_dir, 'C.npy'))
 
+    # Support input pruning by removing the corresponding row from F
+    # Weight and class pruning (as described in VSALUT) are currently not supported in our MCU implementation (MicroVSA) 
+    prune_row_index = np.all(F == 0, axis = 1)
+    # print (f'Removing: {np.count_nonzero(prune_row_index)}/{F.shape[0]}')
+    F = F[~prune_row_index]
+
     num_class = C.shape[0]
     fhv_dimension = F.shape[1]
     num_feature = F.shape[0]
