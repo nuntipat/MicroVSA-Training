@@ -34,15 +34,23 @@ class BinaryActivation(torch.nn.Module):
 torch.seed()
 
 class FeatureLayer(nn.Module):
-    def __init__(self, N, FD, VD, lut_nbit, reduction_method):
+    def __init__(self, N, FD, VD, lut_nbit, extra_lut, reduction_method):
         super(FeatureLayer, self).__init__()
         self.num_feature = N
         self.fhv_dimension = FD
         self.vhv_dimension = VD
         self.lut_nbit = lut_nbit
+        self.extra_lut = extra_lut
         self.reduction_method = reduction_method
+        
         self.rept = int(FD / VD)
-        self.weight = torch.nn.Parameter(torch.empty((self.num_feature, self.fhv_dimension)))
+        if extra_lut == 0:
+            self.num_feature_replicate = 0
+        else:
+            self.num_feature_replicate = self.num_feature + self.num_feature * self.extra_lut
+            self.num_feature_replicate = int((self.num_feature_replicate // self.lut_nbit) * self.lut_nbit) - self.num_feature
+
+        self.weight = torch.nn.Parameter(torch.empty((self.num_feature + self.num_feature_replicate, self.fhv_dimension)))
         nn.init.xavier_uniform_(self.weight)
         self.f = torch.zeros_like(self.weight.data).to(device)
         self.b = torch.zeros_like(self.weight.data).to(device)
@@ -53,10 +61,10 @@ class FeatureLayer(nn.Module):
         self.mask = nn.Parameter(torch.ones_like(self.weight), requires_grad=False)
         self.binarization = BinaryActivation()
         if self.reduction_method == 'lut':
-            self.permute = nn.Parameter(torch.from_numpy(np.random.permutation(N)), requires_grad=False)
+            self.permute = nn.Parameter(torch.from_numpy(np.concatenate((np.random.permutation(N), np.random.permutation(self.num_feature_replicate)))), requires_grad=False)
             self.lut_weights = nn.ParameterList()
             self.lut_pads = nn.ParameterList() # TODO: module weight
-            n = self.num_feature
+            n = self.num_feature + self.num_feature_replicate
             while n > lut_nbit:
                 num_pad = lut_nbit - (n % lut_nbit) if n % lut_nbit != 0 else 0
                 param = nn.Parameter(torch.empty((n + num_pad, self.fhv_dimension)))
@@ -64,8 +72,6 @@ class FeatureLayer(nn.Module):
                 self.lut_weights.append(param)
                 self.lut_pads.append(nn.ZeroPad2d((0, 0, 0, num_pad)))
                 n = (n + num_pad) // lut_nbit
-            # print (self.lut_weights)
-            # print (self.lut_pads)
 
     def forward(self, x):
         x = x.view(-1, self.num_feature, self.vhv_dimension).repeat(1, 1, self.rept)
@@ -88,7 +94,7 @@ class FeatureLayer(nn.Module):
 
         y = torch.sum(tmp, dim=1)
         return y
-    
+
     def prune_input(self, prune_level=0.5):
         # Prune based on magnitude of real-valued weights
         threshold = torch.quantile(torch.mean(torch.abs(self.weight), axis=1), prune_level)
@@ -158,7 +164,7 @@ class ValueBox(nn.Module):
         return x
 
 class ValFeaClaSearchNet(nn.Module):
-    def __init__(self, N, M, FD, VD, K, dp = 0, enable_binarize=True, lut_nbit=6, reduction_method='add'):
+    def __init__(self, N, M, FD, VD, K, dp = 0, enable_binarize=True, lut_nbit=6, extra_lut=0, reduction_method='add'):
         super(ValFeaClaSearchNet, self).__init__()
         self.num_feature = N
         self.num_value = M
@@ -168,7 +174,7 @@ class ValFeaClaSearchNet(nn.Module):
         self.drop_prob = dp
         self.enable_binarize = enable_binarize
         self.fc0 = ValueBox(self.vhv_dimension)
-        self.fc1 = FeatureLayer(self.num_feature, self.fhv_dimension, self.vhv_dimension, lut_nbit, reduction_method)
+        self.fc1 = FeatureLayer(self.num_feature, self.fhv_dimension, self.vhv_dimension, lut_nbit, extra_lut, reduction_method)
         self.binarization = BinaryActivation()
         self.fc2 = ClassLayer(self.fhv_dimension, self.num_class)
 

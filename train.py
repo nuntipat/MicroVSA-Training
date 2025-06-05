@@ -20,7 +20,7 @@ def train_ldc(x_train, y_train, x_val, y_val,
               vhv_dimension, fhv_dimension, num_feature, num_value, num_class,
               epochs=50, batch_size=128, initial_learning_rate=0.001, learning_rate_decay=0.98,
               weight_decay=0.0001, dropout_probability=0, input_min=0, input_max=1, loss_weight=None,
-              enable_binarize=True, enable_pruning=False, prune_method='weight', prune_weight_level=0, prune_input_level=0, prune_class_level=0, reduction_method='add', lut_size=6,
+              enable_binarize=True, enable_pruning=False, prune_method='weight', prune_weight_level=0, prune_input_level=0, prune_class_level=0, reduction_method='add', lut_size=6, extra_lut=0,
               verbose=True, log_file=None):
     if verbose:
         log.show_log(f"Training Parameters:", file=log_file)
@@ -39,6 +39,7 @@ def train_ldc(x_train, y_train, x_val, y_val,
         log.show_log(f"    prune_class_level = {prune_class_level}", file=log_file)
         log.show_log(f"    reduction_method = {reduction_method}", file=log_file)
         log.show_log(f"    lut_size = {lut_size}", file=log_file)
+        log.show_log(f"    extra_lut = {extra_lut}", file=log_file)
         log.show_log("", file=log_file)
 
     train_set = TensorDataset(torch.from_numpy(x_train), torch.from_numpy(y_train))
@@ -49,7 +50,7 @@ def train_ldc(x_train, y_train, x_val, y_val,
 
     device = ldc_model.device
     model = ldc_model.ValFeaClaSearchNet(num_feature, num_value, fhv_dimension, vhv_dimension, num_class,
-                                   dropout_probability, enable_binarize, lut_size, reduction_method).to(device)
+                                   dropout_probability, enable_binarize, lut_size, extra_lut, reduction_method).to(device)
     # model = LDCConv.LDC((1, 10, 49), fhv_dimension, num_value, vhv_dimension, num_class)
     loss_fn = nn.CrossEntropyLoss(weight=loss_weight) # weight=torch.FloatTensor([1, 32.6, 12.52, 113, 11.26])# custom weight can be passing weight=torch.FloatTensor([18,18,1]) weight=torch.FloatTensor([2.63,1])  weight=torch.FloatTensor([2.6,1])
     optimizer = torch.optim.Adam(model.parameters(), lr=initial_learning_rate, weight_decay=weight_decay)
@@ -265,7 +266,7 @@ def eval_ldc(F, V, C, P, L, x_test, y_test, reduction_method, input_min, input_m
         # plt.show()
     return acc, confusion_matrix_normalize
 
-def train_mnist(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/mnist', vhv_dimension=8, fhv_dimension=64, enable_pruning=False, prune_method='weight', prune_weight_level=1.0, prune_input_level=1.0, prune_class_level=0.0, reduction_method='add', lut_size=6):
+def train_mnist(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/mnist', vhv_dimension=8, fhv_dimension=64, enable_pruning=False, prune_method='weight', prune_weight_level=1.0, prune_input_level=1.0, prune_class_level=0.0, reduction_method='add', lut_size=6, extra_lut=0):
     if save_model:
         os.makedirs(save_model_dir, exist_ok=True)
         log_file = open(f'{save_model_dir}/log.txt', 'w')
@@ -298,6 +299,7 @@ def train_mnist(verbose=True, save_model=True, enable_binarize=True, save_model_
                         prune_class_level=prune_class_level,
                         reduction_method=reduction_method,
                         lut_size=lut_size,
+                        extra_lut=extra_lut,
                         log_file=log_file,
                         verbose=verbose
                         )
@@ -378,12 +380,12 @@ def train_ucihar(verbose=True, save_model=True, enable_binarize=True, save_model
                         num_class=6,
                         epochs=50,
                         batch_size=128,
-                        initial_learning_rate=0.002,
-                        learning_rate_decay=0.99,
-                        weight_decay=0.0001,
+                        initial_learning_rate=0.001,
+                        learning_rate_decay=0.975,
+                        weight_decay=0,
                         dropout_probability=0,
                         input_min=0,
-                        input_max=255,
+                        input_max=1,
                         enable_binarize=enable_binarize,
                         enable_pruning=enable_pruning, 
                         prune_method=prune_method, 
@@ -584,7 +586,7 @@ def train_st_handpose(verbose=True, save_model=True, enable_binarize=True, save_
 
     return acc, cm
 
-def train_jsc(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/jsc', vhv_dimension=8, fhv_dimension=64, enable_pruning=False, prune_method='weight', prune_weight_level=1.0, prune_input_level=1.0, prune_class_level=0, reduction_method='add', lut_size=6):
+def train_jsc(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/jsc', vhv_dimension=8, fhv_dimension=64, enable_pruning=False, prune_method='weight', prune_weight_level=1.0, prune_input_level=1.0, prune_class_level=0, reduction_method='add', lut_size=6, extra_lut=0):
     if save_model:
         os.makedirs(save_model_dir, exist_ok=True)
         log_file = open(f'{save_model_dir}/log.txt', 'w')
@@ -617,6 +619,7 @@ def train_jsc(verbose=True, save_model=True, enable_binarize=True, save_model_di
                         prune_class_level=prune_class_level,
                         reduction_method=reduction_method,
                         lut_size=lut_size,
+                        extra_lut=extra_lut,
                         log_file=log_file,
                         verbose=verbose
                         )
@@ -699,6 +702,7 @@ if __name__ == '__main__':
     parser.add_argument('-pm', '--prune-method', choices=['input', 'weight', 'both'], default='weight', help='pruning method (input - remove some input features, weight - remove some cells from the F matrix)')
     parser.add_argument('-rm', '--reduction-method', choices=['adder', 'lut'], default='adder', help='reduction method (adder - compute S with dot-product (Original LDC, MicroVSA), lut - use LUT tree instead of the adder (VSALUT))')
     parser.add_argument('-ls', '--lut-size', type=int, default=6, help='maximum number of input of the LUT')
+    parser.add_argument('-el', '--extra-lut', type=float, default=0.0, help='percent of extra (redundant) lut from 0.0-1.0')
     parser.add_argument('--use-sgn', action='store_true', help='train the binary LDC model (default to MCU-optimized LDC model if --use-sgn is not found)')
     parser.add_argument('--no-save', action='store_false', help='do not save the model')
     args = parser.parse_args()
@@ -718,11 +722,11 @@ if __name__ == '__main__':
     enable_pruning = (args.prune_weight_level != 0.0) or (args.prune_input_level != 0.0)
 
     all_accuracy = []
-    for i in range(args.num_rounds):
-        print (f'Training #{i+1}/{args.num_rounds}...')
+    for i in trange(args.num_rounds):
+        # print (f'Training #{i+1}/{args.num_rounds}...')
         acc, cm = model_fn[args.dataset_name](vhv_dimension=args.v_dim, fhv_dimension=args.f_dim, save_model=args.no_save, verbose=True, 
-                                              enable_binarize=args.use_sgn, enable_pruning=enable_pruning, prune_method=args.prune_method, prune_weight_level=args.prune_weight_level, prune_input_level=args.prune_input_level, prune_class_level=args.prune_class_level, reduction_method=args.reduction_method, lut_size=args.lut_size,
-                                              save_model_dir=f"result/{args.dataset_name}_d{args.f_dim}{'s' if args.use_sgn else ''}{f'_pn{args.prune_input_level}' if enable_pruning and args.prune_method != 'weight' else ''}{f'_pf{args.prune_weight_level}' if enable_pruning and args.prune_method != 'input' else ''}{f'_pc{args.prune_class_level}' if args.prune_class_level > 0 else ''}{f'_lr{args.lut_size}' if args.reduction_method == 'lut' else ''}_{i+1}")
+                                              enable_binarize=args.use_sgn, enable_pruning=enable_pruning, prune_method=args.prune_method, prune_weight_level=args.prune_weight_level, prune_input_level=args.prune_input_level, prune_class_level=args.prune_class_level, reduction_method=args.reduction_method, lut_size=args.lut_size, extra_lut=args.extra_lut,
+                                              save_model_dir=f"result/{args.dataset_name}_d{args.f_dim}{'s' if args.use_sgn else ''}{f'_pn{args.prune_input_level}' if enable_pruning and args.prune_method != 'weight' else ''}{f'_pf{args.prune_weight_level}' if enable_pruning and args.prune_method != 'input' else ''}{f'_pc{args.prune_class_level}' if args.prune_class_level > 0 else ''}{f'_lr{args.lut_size}' if args.reduction_method == 'lut' else ''}{f'_el{args.extra_lut}' if args.extra_lut > 0 else ''}_{i+1}")
         all_accuracy.append(acc)
     print (f'Accuracy: {all_accuracy}')
     print (f'Best accuracy: {max(all_accuracy):.4f}')
