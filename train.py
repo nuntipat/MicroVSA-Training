@@ -479,10 +479,92 @@ def train_st_handpose(verbose=True, save_model=True, enable_binarize=True, save_
 
     return acc, cm
 
+def train_jsc(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/jsc', vhv_dimension=8, fhv_dimension=64):
+    if save_model:
+        os.makedirs(save_model_dir, exist_ok=True)
+        log_file = open(f'{save_model_dir}/log.txt', 'w')
+        result_img_path = f'{save_model_dir}/result.png'
+    else:
+        log_file = sys.stdout
+        result_img_path = None
+
+    x_train, y_train, x_val, y_val = dataset.get_jsc(True)
+
+    F, V, C = train_ldc(x_train, y_train, x_val, y_val,
+                        vhv_dimension=vhv_dimension,
+                        fhv_dimension=fhv_dimension,
+                        num_feature=32,
+                        num_value=256,
+                        num_class=5,
+                        epochs=50,
+                        batch_size=2048,
+                        initial_learning_rate=0.0001,
+                        learning_rate_decay=0.975,
+                        weight_decay=0.0001,
+                        dropout_probability=0,
+                        input_min=0,
+                        input_max=1,
+                        enable_binarize=enable_binarize,
+                        log_file=log_file,
+                        verbose=verbose
+                        )
+
+    acc, cm = eval_ldc(F, V, C, x_val, y_val, input_min=0, input_max=1, binarize=enable_binarize, log_file=log_file, verbose=verbose,
+             result_img_path=result_img_path)
+
+    if save_model:
+        log_file.close()
+        np.save(f'{save_model_dir}/F.npy', F)
+        np.save(f'{save_model_dir}/V.npy', V)
+        np.save(f'{save_model_dir}/C.npy', C)
+
+    return acc, cm
+
+def train_nid(verbose=True, save_model=True, enable_binarize=True, save_model_dir='result/jsc', vhv_dimension=8, fhv_dimension=64):
+    if save_model:
+        os.makedirs(save_model_dir, exist_ok=True)
+        log_file = open(f'{save_model_dir}/log.txt', 'w')
+        result_img_path = f'{save_model_dir}/result.png'
+    else:
+        log_file = sys.stdout
+        result_img_path = None
+
+    x_train, y_train, x_val, y_val = dataset.get_nid(True)
+
+    F, V, C = train_ldc(x_train, y_train, x_val, y_val,
+                        vhv_dimension=vhv_dimension,
+                        fhv_dimension=fhv_dimension,
+                        num_feature=4,
+                        num_value=256,
+                        num_class=2,
+                        epochs=50,
+                        batch_size=512,
+                        initial_learning_rate=0.0001,
+                        learning_rate_decay=0.995,
+                        weight_decay=0,
+                        dropout_probability=0,
+                        input_min=0,
+                        input_max=255,
+                        loss_weight=torch.FloatTensor([2, 1]).to(ldc_model.device),
+                        enable_binarize=enable_binarize,
+                        log_file=log_file,
+                        verbose=verbose
+                        )
+
+    acc, cm = eval_ldc(F, V, C, x_val, y_val, input_min=0, input_max=255, binarize=enable_binarize, log_file=log_file, verbose=verbose,
+             result_img_path=result_img_path)
+
+    if save_model:
+        log_file.close()
+        np.save(f'{save_model_dir}/F.npy', F)
+        np.save(f'{save_model_dir}/V.npy', V)
+        np.save(f'{save_model_dir}/C.npy', C)
+
+    return acc, cm
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Training the binary LDC model or the MCU-optimized LDC model')
-    parser.add_argument('-d', '--dataset-name', choices=['mnist', 'ptb', 'qksd', 'har', 'fsdd', 'wisdm', 'sthand'], required=True, help='name of the dataset')
+    parser.add_argument('-d', '--dataset-name', choices=['mnist', 'ptb', 'qksd', 'har', 'fsdd', 'wisdm', 'sthand', 'jsc', 'nid'], required=True, help='name of the dataset')
     parser.add_argument('-n', '--num-rounds', type=int, default=5, help='number of rounds to train the model')
     parser.add_argument('-dv', '--v-dim', type=int, default=8, help='dimension of the V vector (Dv in the paper)')
     parser.add_argument('-df', '--f-dim', type=int, default=8, help='dimension of the F and C vector (Df in the paper)')
@@ -496,7 +578,9 @@ if __name__ == '__main__':
         'har': train_ucihar, 
         'fsdd': train_fsdd, 
         'wisdm': train_wisdm, 
-        'sthand': train_st_handpose
+        'sthand': train_st_handpose,
+        'jsc': train_jsc,
+        'nid': train_nid
     }
 
     all_accuracy = []

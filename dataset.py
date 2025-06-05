@@ -145,6 +145,33 @@ def get_st_handpose(show_stats=False):
         print_stats(x_train, y_train, x_test, y_test)
     return x_train, y_train, x_test, y_test
 
+def get_jsc(show_stats=False):
+    x_train = np.load(f'data/jsc/x_train.npy').astype(np.float32)
+    y_train = np.load(f'data/jsc/y_train.npy').flatten().astype(int)
+    x_test = np.load(f'data/jsc/x_test.npy').astype(np.float32)
+    y_test = np.load(f'data/jsc/y_test.npy').flatten().astype(int)
+
+    permute_index = np.random.permutation(x_train.shape[0])
+    x_train = x_train[permute_index]
+    y_train = y_train[permute_index]
+
+    if show_stats:
+        print_stats(x_train, y_train, x_test, y_test)
+    return x_train, y_train, x_test, y_test
+
+def get_nid(show_stats=False):
+    x_train = np.load(f'data/nid/x_train.npy').astype(np.float32)
+    y_train = np.load(f'data/nid/y_train.npy').flatten().astype(int)
+    x_test = np.load(f'data/nid/x_test.npy').astype(np.float32)
+    y_test = np.load(f'data/nid/y_test.npy').flatten().astype(int)
+
+    permute_index = np.random.permutation(x_train.shape[0])
+    x_train = x_train[permute_index]
+    y_train = y_train[permute_index]
+
+    if show_stats:
+        print_stats(x_train, y_train, x_test, y_test)
+    return x_train, y_train, x_test, y_test
 
 if __name__ == '__main__':
-    get_wisdm()
+    get_jsc(True)
