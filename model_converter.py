@@ -53,33 +53,26 @@ if __name__ == '__main__':
     num_class = C.shape[0]
     fhv_dimension = F.shape[1]
     num_feature = F.shape[0]
-    c_typename = 'LDC_MODEL_DTYPE'
 
     with open(os.path.join(args.output_dir, f'{args.output_filename}.h'), 'w') as outfile:
         outfile.write(f'#ifndef MODEL_{args.model_name.upper()}_H_\n')
         outfile.write(f'#define MODEL_{args.model_name.upper()}_H_\n\n')
 
         outfile.write(f'#include <stdint.h>\n')
-        outfile.write(f'#include "ldc_inference.h"\n\n')
+        outfile.write(f'#include "microvsa_config.h"\n\n')
 
-        outfile.write(f'//  #define MODEL_TRANSPOSE_F\n')
-        outfile.write(f'//  #define MODEL_TRANSPOSE_C\n')
-        outfile.write(f'//  #define MODEL_F_IN_RAM\n')
-        outfile.write(f'//  #define MODEL_V_IN_RAM\n')
-        outfile.write(f'//  #define MODEL_C_IN_RAM\n\n')
-
-        outfile.write(f'#define LDC_MODEL_FHV_DIMENSION_BIT {fhv_dimension}\n')
-        outfile.write('#if LDC_IMPLEMENTATION_NUMBIT == 8\n')
-        outfile.write(f'#define LDC_MODEL_FHV_DIMENSION_WORD {fhv_dimension // 8}\n')
-        outfile.write('#elif LDC_IMPLEMENTATION_NUMBIT == 16\n')
-        outfile.write(f'#define LDC_MODEL_FHV_DIMENSION_WORD {fhv_dimension // 16}\n')
-        outfile.write('#elif LDC_IMPLEMENTATION_NUMBIT == 32\n')
-        outfile.write(f'#define LDC_MODEL_FHV_DIMENSION_WORD {fhv_dimension // 32}\n')
+        outfile.write(f'#define MICROVSA_MODEL_FHV_DIMENSION_BIT {fhv_dimension}\n')
+        outfile.write('#if MICROVSA_IMPL_WORDSIZE == 8\n')
+        outfile.write(f'#define MICROVSA_MODEL_FHV_DIMENSION_WORD {fhv_dimension // 8}\n')
+        outfile.write('#elif MICROVSA_IMPL_WORDSIZE == 16\n')
+        outfile.write(f'#define MICROVSA_MODEL_FHV_DIMENSION_WORD {fhv_dimension // 16}\n')
+        outfile.write('#elif MICROVSA_IMPL_WORDSIZE == 32\n')
+        outfile.write(f'#define MICROVSA_MODEL_FHV_DIMENSION_WORD {fhv_dimension // 32}\n')
         outfile.write('#else\n')
         outfile.write('# error Unsupport look up configuration\n')
         outfile.write('#endif\n')
-        outfile.write(f'#define LDC_MODEL_NUM_CLASS {num_class}\n')
-        outfile.write(f'#define LDC_MODEL_NUM_FEATURE {num_feature}\n\n')
+        outfile.write(f'#define MICROVSA_MODEL_NUM_CLASS {num_class}\n')
+        outfile.write(f'#define MICROVSA_MODEL_NUM_FEATURE {num_feature}\n\n')
 
         outfile.write('#ifdef MODEL_F_IN_RAM\n')
         outfile.write('#define MODEL_F_QUALIFIER\n')
@@ -97,18 +90,18 @@ if __name__ == '__main__':
         outfile.write('#define MODEL_C_QUALIFIER const\n')
         outfile.write('#endif\n\n')
 
-        outfile.write('#if LDC_IMPLEMENTATION_NUMBIT == 8\n')
-        outfile.write(f'extern MODEL_F_QUALIFIER uint8_t LDC_MODEL_F[];\n')
-        outfile.write(f'extern MODEL_V_QUALIFIER uint8_t LDC_MODEL_V[];\n')
-        outfile.write(f'extern MODEL_C_QUALIFIER uint8_t LDC_MODEL_C[];\n')
-        outfile.write('#elif LDC_IMPLEMENTATION_NUMBIT == 16\n')
-        outfile.write(f'extern MODEL_F_QUALIFIER uint16_t LDC_MODEL_F[];\n')
-        outfile.write(f'extern MODEL_V_QUALIFIER uint16_t LDC_MODEL_V[];\n')
-        outfile.write(f'extern MODEL_C_QUALIFIER uint16_t LDC_MODEL_C[];\n')
-        outfile.write('#elif LDC_IMPLEMENTATION_NUMBIT == 32\n')
-        outfile.write(f'extern MODEL_F_QUALIFIER uint32_t LDC_MODEL_F[];\n')
-        outfile.write(f'extern MODEL_V_QUALIFIER uint32_t LDC_MODEL_V[];\n')
-        outfile.write(f'extern MODEL_C_QUALIFIER uint32_t LDC_MODEL_C[];\n')
+        outfile.write('#if MICROVSA_IMPL_WORDSIZE == 8\n')
+        outfile.write(f'extern MODEL_F_QUALIFIER uint8_t MICROVSA_MODEL_F[];\n')
+        outfile.write(f'extern MODEL_V_QUALIFIER uint8_t MICROVSA_MODEL_V[];\n')
+        outfile.write(f'extern MODEL_C_QUALIFIER uint8_t MICROVSA_MODEL_C[];\n')
+        outfile.write('#elif MICROVSA_IMPL_WORDSIZE == 16\n')
+        outfile.write(f'extern MODEL_F_QUALIFIER uint16_t MICROVSA_MODEL_F[];\n')
+        outfile.write(f'extern MODEL_V_QUALIFIER uint16_t MICROVSA_MODEL_V[];\n')
+        outfile.write(f'extern MODEL_C_QUALIFIER uint16_t MICROVSA_MODEL_C[];\n')
+        outfile.write('#elif MICROVSA_IMPL_WORDSIZE == 32\n')
+        outfile.write(f'extern MODEL_F_QUALIFIER uint32_t MICROVSA_MODEL_F[];\n')
+        outfile.write(f'extern MODEL_V_QUALIFIER uint32_t MICROVSA_MODEL_V[];\n')
+        outfile.write(f'extern MODEL_C_QUALIFIER uint32_t MICROVSA_MODEL_C[];\n')
         outfile.write('#else\n')
         outfile.write('# error Unsupport look up configuration\n')
         outfile.write('#endif\n\n')
@@ -120,9 +113,9 @@ if __name__ == '__main__':
 
         outfile.write(f'#')
         for word_size in [8, 16, 32]:
-            outfile.write(f'if LDC_IMPLEMENTATION_NUMBIT == {word_size}\n')
+            outfile.write(f'if MICROVSA_IMPL_WORDSIZE == {word_size}\n')
 
-            outfile.write(f'MODEL_F_QUALIFIER {get_ctype(word_size)} LDC_MODEL_F[] = {{\n')
+            outfile.write(f'MODEL_F_QUALIFIER {get_ctype(word_size)} MICROVSA_MODEL_F[] = {{\n')
             outfile.write('#ifndef MODEL_TRANSPOSE_F\n')
             numpy_to_hex_array(outfile, F, word_size, pack=not args.no_pack)
             outfile.write('#else\n')
@@ -130,11 +123,11 @@ if __name__ == '__main__':
             outfile.write('#endif\n')
             outfile.write('};\n')
 
-            outfile.write(f'MODEL_V_QUALIFIER {get_ctype(word_size)} LDC_MODEL_V[] = {{\n')
+            outfile.write(f'MODEL_V_QUALIFIER {get_ctype(word_size)} MICROVSA_MODEL_V[] = {{\n')
             numpy_to_hex_array(outfile, V[:, :word_size], word_size, pack=not args.no_pack)
             outfile.write('};\n')
 
-            outfile.write(f'MODEL_C_QUALIFIER {get_ctype(word_size)} LDC_MODEL_C[] = {{\n')
+            outfile.write(f'MODEL_C_QUALIFIER {get_ctype(word_size)} MICROVSA_MODEL_C[] = {{\n')
             outfile.write('#ifndef MODEL_TRANSPOSE_C\n')
             numpy_to_hex_array(outfile, C, word_size, pack=not args.no_pack)
             outfile.write('#else\n')
