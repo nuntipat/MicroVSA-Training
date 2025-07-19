@@ -127,6 +127,10 @@ def get_wisdm(show_stats=False):
     x_test = np.load('data/wisdm/generated_dataset/x_test.npy').astype(np.float32)
     y_test = np.load('data/wisdm/generated_dataset/y_test.npy').astype(int)
 
+    x_train = (x_train / 80.0) + 0.5
+    x_val = (x_val / 80.0) + 0.5
+    x_test = (x_test / 80.0) + 0.5
+
     if show_stats:
         print_stats(x_train, y_train, x_test, y_test)
     return x_train, y_train, x_val, y_val, x_test, y_test
