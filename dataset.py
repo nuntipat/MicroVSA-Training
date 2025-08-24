@@ -177,5 +177,15 @@ def get_nid(show_stats=False):
         print_stats(x_train, y_train, x_test, y_test)
     return x_train, y_train, x_test, y_test
 
+def get_isolet(show_stats=False):
+    x_train = np.load(f'data/isolet/x_train.npy').astype(np.float32)
+    y_train = np.load(f'data/isolet/y_train.npy').flatten().astype(int)
+    x_test = np.load(f'data/isolet/x_test.npy').astype(np.float32)
+    y_test = np.load(f'data/isolet/y_test.npy').flatten().astype(int)
+
+    if show_stats:
+        print_stats(x_train, y_train, x_test, y_test)
+    return x_train, y_train, x_test, y_test
+
 if __name__ == '__main__':
     get_jsc(True)

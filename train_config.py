@@ -104,4 +104,15 @@ model_config = {
         'epochs': 50,
         'loss_weight': [2, 1],
     },
+    'isolet': {
+        'dataset_fn': dataset.get_isolet, 
+        'num_feature': 617, 
+        'num_class': 26, 
+        'num_value': 256, 
+        'input_min': 0, 
+        'learning_rate': 0.001, 
+        'input_max': 1,
+        'batch_size': 64,
+        'epochs': 50,
+    },
 }

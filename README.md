@@ -38,8 +38,12 @@ This repository contains the model training and conversion scripts for the binar
     2. Unzip and copy the `ST_VL53L8CX_handposture_dataset` directory to the `data/st_handpose` directory
 
 7. Microsoft Scalable Noisy Speech Dataset *(Use to generate negative sample to train the model on the Qualcomm Keyword Speech Dataset)*
-    1. Download the dataset from [link](https://github.com/microsoft/MS-SNSD)
+    1. Download the dataset from [link](https://github.com/microsoft/MS-SNSD/archive/refs/heads/master.zip)
     2. Unzip and copy the dataset directory to the `data` directory
+
+8. UCI Spoken letter recognition (ISOLET)
+    1. Download the dataset from [link](https://archive.ics.uci.edu/dataset/54/isolet)
+    2. Unzip and copy the file `isolet1+2+3+4.data` and `isolet5.data` to the `data/isolet` directory
 
 Final `data` directory structure
 
