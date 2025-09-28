@@ -343,6 +343,7 @@ if __name__ == '__main__':
     parser.add_argument('-rm', '--reduction-method', choices=['adder', 'lut'], default='adder', help='reduction method (adder - compute S with dot-product (Original LDC, MicroVSA), lut - use LUT tree instead of the adder (VSALUT))')
     parser.add_argument('-ls', '--lut-size', type=int, default=6, help='maximum number of input of the LUT')
     parser.add_argument('-el', '--extra-lut', type=float, default=0.0, help='percent of extra (redundant) lut from 0.0-1.0')
+    parser.add_argument('-o', '--output-dir', type=str, default='result', help='output directory to save the trained model and result')
     parser.add_argument('--use-sgn', action='store_true', help='train the binary LDC model (default to MCU-optimized LDC model if --use-sgn is not found)')
     parser.add_argument('--no-save', action='store_false', help='do not save the model')
     args = parser.parse_args()
@@ -363,13 +364,19 @@ if __name__ == '__main__':
         'save_model': args.no_save,
     }
 
+    print (f'Training {args.dataset_name} dataset ({args.num_rounds} rounds)...')
+
     all_accuracy = []
     for i in trange(args.num_rounds):
-        # print (f'Training #{i+1}/{args.num_rounds}...')
         acc, cm = train(**{
             **train_config.model_config[args.dataset_name], 
             **traing_config, 
-            'save_model_dir': f"result/{args.dataset_name}_d{args.f_dim}{'s' if args.use_sgn else ''}{f'_pn{args.prune_input_level}' if enable_pruning and args.prune_method != 'weight' else ''}{f'_pf{args.prune_weight_level}' if enable_pruning and args.prune_method != 'input' else ''}{f'_pc{args.prune_class_level}' if args.prune_class_level > 0 else ''}{f'_lr{args.lut_size}' if args.reduction_method == 'lut' else ''}{f'_el{args.extra_lut}' if args.extra_lut > 0 else ''}_{i+1}"
+            'save_model_dir': f"{args.output_dir}/{args.dataset_name}_d{args.f_dim}{'s' if args.use_sgn else ''}{f'_pn{args.prune_input_level}' if enable_pruning and args.prune_method != 'weight' else ''}{f'_pf{args.prune_weight_level}' if enable_pruning and args.prune_method != 'input' else ''}{f'_pc{args.prune_class_level}' if args.prune_class_level > 0 else ''}{f'_lr{args.lut_size}' if args.reduction_method == 'lut' else ''}{f'_el{args.extra_lut}' if args.extra_lut > 0 else ''}_{i+1}"
         })
-        print (acc)
         all_accuracy.append(acc)
+
+    print ('Summary')
+    print ('-----------------------')
+    print (f'All accuracy = {all_accuracy}')
+    print (f'Best accuracy = {np.max(all_accuracy)}')
+    print (f'Average accuracy = {np.mean(all_accuracy)} (+/- {np.std(all_accuracy)})')
