@@ -1,0 +1,438 @@
+Training Parameters:
+    vhv_dimension = 4
+    fhv_dimension = 256
+    initial_learning_rate = 0.001
+    learning_rate_decay = 0.975
+    weight_decay = 0
+    dropout_probability = 0
+    input_min = 0
+    input_max = 1
+    enable_pruning = True
+    prune_method = weight
+    prune_weight_level = 0.95
+    prune_input_level = 0.0
+    prune_class_level = 0.6
+    reduction_method = lut
+    lut_size = 8
+    extra_lut = 0.5
+
+Epoch 1
+-------------------------------
+loss: 4.005128  [    0/ 6238]
+Test Error: 
+ Accuracy: 72.16%, Avg loss: 0.895601 FreezeRate: 0
+1.2517027854919434 sec
+
+Epoch 2
+-------------------------------
+loss: 0.743757  [    0/ 6238]
+Test Error: 
+ Accuracy: 81.65%, Avg loss: 0.592456 FreezeRate: 0
+1.2485802173614502 sec
+
+Epoch 3
+-------------------------------
+loss: 0.433078  [    0/ 6238]
+Test Error: 
+ Accuracy: 84.99%, Avg loss: 0.460649 FreezeRate: 0
+1.2447192668914795 sec
+
+Epoch 4
+-------------------------------
+loss: 0.463860  [    0/ 6238]
+Test Error: 
+ Accuracy: 88.07%, Avg loss: 0.398781 FreezeRate: 0
+1.2426550388336182 sec
+
+Epoch 5
+-------------------------------
+loss: 0.350334  [    0/ 6238]
+Test Error: 
+ Accuracy: 88.65%, Avg loss: 0.355740 FreezeRate: 0
+1.2446198463439941 sec
+
+Epoch 6
+-------------------------------
+loss: 0.181811  [    0/ 6238]
+Test Error: 
+ Accuracy: 89.74%, Avg loss: 0.312909 FreezeRate: 0
+1.2425806522369385 sec
+
+Epoch 7
+-------------------------------
+loss: 0.330849  [    0/ 6238]
+Test Error: 
+ Accuracy: 90.83%, Avg loss: 0.293977 FreezeRate: 0
+1.245363712310791 sec
+
+Epoch 8
+-------------------------------
+loss: 0.154899  [    0/ 6238]
+Test Error: 
+ Accuracy: 91.92%, Avg loss: 0.273900 FreezeRate: 0
+1.2417280673980713 sec
+
+Epoch 9
+-------------------------------
+loss: 0.160923  [    0/ 6238]
+Test Error: 
+ Accuracy: 91.08%, Avg loss: 0.270535 FreezeRate: 0
+1.2436048984527588 sec
+
+Epoch 10
+-------------------------------
+loss: 0.043977  [    0/ 6238]
+Test Error: 
+ Accuracy: 90.44%, Avg loss: 0.282098 FreezeRate: 0
+1.2447879314422607 sec
+
+Epoch 11
+-------------------------------
+loss: 0.134926  [    0/ 6238]
+Test Error: 
+ Accuracy: 90.57%, Avg loss: 0.279632 FreezeRate: 0
+1.246297836303711 sec
+
+Epoch 12
+-------------------------------
+loss: 0.079586  [    0/ 6238]
+Test Error: 
+ Accuracy: 91.02%, Avg loss: 0.281553 FreezeRate: 0
+1.244983434677124 sec
+
+Epoch 13
+-------------------------------
+loss: 0.119972  [    0/ 6238]
+Test Error: 
+ Accuracy: 89.03%, Avg loss: 0.566534 FreezeRate: 0
+Saving model state...
+1.274946928024292 sec
+
+Epoch 14
+-------------------------------
+loss: 0.653298  [    0/ 6238]
+Test Error: 
+ Accuracy: 90.76%, Avg loss: 0.439061 FreezeRate: 0
+Saving model state...
+1.2735655307769775 sec
+
+Epoch 15
+-------------------------------
+loss: 0.445985  [    0/ 6238]
+Test Error: 
+ Accuracy: 89.42%, Avg loss: 0.409241 FreezeRate: 0
+1.2773175239562988 sec
+
+Epoch 16
+-------------------------------
+loss: 0.321776  [    0/ 6238]
+Test Error: 
+ Accuracy: 89.67%, Avg loss: 0.355175 FreezeRate: 0.0
+1.3561418056488037 sec
+
+Epoch 17
+-------------------------------
+loss: 0.349336  [    0/ 6238]
+Test Error: 
+ Accuracy: 90.06%, Avg loss: 0.358551 FreezeRate: 0.0
+1.3568239212036133 sec
+
+Epoch 18
+-------------------------------
+loss: 0.217787  [    0/ 6238]
+Test Error: 
+ Accuracy: 91.47%, Avg loss: 0.322530 FreezeRate: 0.0
+Saving model state...
+1.3681285381317139 sec
+
+Epoch 19
+-------------------------------
+loss: 0.207197  [    0/ 6238]
+Test Error: 
+ Accuracy: 90.76%, Avg loss: 0.330767 FreezeRate: 0.0
+1.3637406826019287 sec
+
+Epoch 20
+-------------------------------
+loss: 0.219145  [    0/ 6238]
+Test Error: 
+ Accuracy: 91.73%, Avg loss: 0.315088 FreezeRate: 0.0
+Saving model state...
+1.3629498481750488 sec
+
+Epoch 21
+-------------------------------
+loss: 0.210646  [    0/ 6238]
+Test Error: 
+ Accuracy: 91.34%, Avg loss: 0.288728 FreezeRate: 0.0
+1.3805010318756104 sec
+
+Epoch 22
+-------------------------------
+loss: 0.213198  [    0/ 6238]
+Test Error: 
+ Accuracy: 91.85%, Avg loss: 0.297864 FreezeRate: 0.0
+Saving model state...
+1.4547820091247559 sec
+
+Epoch 23
+-------------------------------
+loss: 0.255274  [    0/ 6238]
+Test Error: 
+ Accuracy: 91.85%, Avg loss: 0.290532 FreezeRate: 0.0
+1.3612661361694336 sec
+
+Epoch 24
+-------------------------------
+loss: 0.135024  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.75%, Avg loss: 0.265774 FreezeRate: 0.0
+Saving model state...
+1.3629772663116455 sec
+
+Epoch 25
+-------------------------------
+loss: 0.172876  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.50%, Avg loss: 0.266956 FreezeRate: 0.0
+1.3619322776794434 sec
+
+Epoch 26
+-------------------------------
+loss: 0.117628  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.37%, Avg loss: 0.278548 FreezeRate: 0.0
+1.3678507804870605 sec
+
+Epoch 27
+-------------------------------
+loss: 0.113828  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.50%, Avg loss: 0.272984 FreezeRate: 0.0
+1.361849069595337 sec
+
+Epoch 28
+-------------------------------
+loss: 0.158262  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.56%, Avg loss: 0.259945 FreezeRate: 0.0
+1.359971523284912 sec
+
+Epoch 29
+-------------------------------
+loss: 0.208854  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.82%, Avg loss: 0.256243 FreezeRate: 0.0
+Saving model state...
+1.3664071559906006 sec
+
+Epoch 30
+-------------------------------
+loss: 0.120366  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.62%, Avg loss: 0.263813 FreezeRate: 0.0
+1.362323522567749 sec
+
+Epoch 31
+-------------------------------
+loss: 0.112704  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.37%, Avg loss: 0.257711 FreezeRate: 0.0
+1.3685548305511475 sec
+
+Epoch 32
+-------------------------------
+loss: 0.200335  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.62%, Avg loss: 0.247263 FreezeRate: 0.0
+1.359025239944458 sec
+
+Epoch 33
+-------------------------------
+loss: 0.204288  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.07%, Avg loss: 0.239131 FreezeRate: 0.0
+Saving model state...
+1.367049217224121 sec
+
+Epoch 34
+-------------------------------
+loss: 0.129018  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.82%, Avg loss: 0.255539 FreezeRate: 0.0
+1.363415241241455 sec
+
+Epoch 35
+-------------------------------
+loss: 0.128448  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.33%, Avg loss: 0.241600 FreezeRate: 0.0
+Saving model state...
+1.3715121746063232 sec
+
+Epoch 36
+-------------------------------
+loss: 0.130791  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.82%, Avg loss: 0.249701 FreezeRate: 0.0
+1.360091209411621 sec
+
+Epoch 37
+-------------------------------
+loss: 0.115336  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.84%, Avg loss: 0.226177 FreezeRate: 0.0
+Saving model state...
+1.3654868602752686 sec
+
+Epoch 38
+-------------------------------
+loss: 0.134459  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.33%, Avg loss: 0.230436 FreezeRate: 0.0
+1.3678123950958252 sec
+
+Epoch 39
+-------------------------------
+loss: 0.149070  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.30%, Avg loss: 0.239963 FreezeRate: 0.0
+1.3641793727874756 sec
+
+Epoch 40
+-------------------------------
+loss: 0.154402  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.20%, Avg loss: 0.229301 FreezeRate: 0.0
+1.360330581665039 sec
+
+Epoch 41
+-------------------------------
+loss: 0.118978  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.65%, Avg loss: 0.241653 FreezeRate: 0.0
+1.361992597579956 sec
+
+Epoch 42
+-------------------------------
+loss: 0.093078  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.33%, Avg loss: 0.238584 FreezeRate: 0.0
+1.3705270290374756 sec
+
+Epoch 43
+-------------------------------
+loss: 0.129409  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.46%, Avg loss: 0.233204 FreezeRate: 0.0
+1.3586442470550537 sec
+
+Epoch 44
+-------------------------------
+loss: 0.080061  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.50%, Avg loss: 0.242616 FreezeRate: 0.0
+1.3628418445587158 sec
+
+Epoch 45
+-------------------------------
+loss: 0.146187  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.50%, Avg loss: 0.242271 FreezeRate: 0.0
+1.3618416786193848 sec
+
+Epoch 46
+-------------------------------
+loss: 0.114877  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.39%, Avg loss: 0.227732 FreezeRate: 0.0
+1.3600635528564453 sec
+
+Epoch 47
+-------------------------------
+loss: 0.122498  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.94%, Avg loss: 0.246024 FreezeRate: 0.0
+1.3599026203155518 sec
+
+Epoch 48
+-------------------------------
+loss: 0.159323  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.20%, Avg loss: 0.233259 FreezeRate: 0.0
+1.364180088043213 sec
+
+Epoch 49
+-------------------------------
+loss: 0.110310  [    0/ 6238]
+Test Error: 
+ Accuracy: 92.94%, Avg loss: 0.227353 FreezeRate: 0.0
+1.3714652061462402 sec
+
+Epoch 50
+-------------------------------
+loss: 0.109443  [    0/ 6238]
+Test Error: 
+ Accuracy: 93.39%, Avg loss: 0.232036 FreezeRate: 0.0
+1.360339879989624 sec
+
+Summary
+-----------------------
+Best accuracy: 93.8%
+
+Evaluation Result
+-----------------------
+[[60  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+   0  0]
+ [ 0 50  0  1  3  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  6  0  0
+   0  0]
+ [ 0  0 58  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0
+   0  1]
+ [ 0  1  0 56  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  1  0  0
+   0  0]
+ [ 0  6  0  0 48  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  1  4  0  0
+   0  0]
+ [ 0  0  0  0  0 59  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1
+   0  0]
+ [ 0  0  0  0  0  0 58  0  0  0  0  0  0  0  0  0  0  0  0  2  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  0  0 60  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  1  0  0 58  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0 60  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  2 57  0  0  1  0  0  0  0  0  0  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0 60  0  0  0  0  0  0  0  0  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  1  0  0  0  0  0  3 47  5  0  0  0  0  0  0  2  0  1  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  4 54  0  0  0  0  0  0  1  0  1  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  1  0  0 59  0  0  0  0  0  0  0  0  0
+   0  0]
+ [ 0  1  0  0  1  0  1  0  0  0  0  0  0  0  0 53  0  0  0  1  1  1  1  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 60  0  0  0  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0 59  0  0  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  4  0  0  0  0  0  0  0  0  0  0  0  0 56  0  0  0  0  0
+   0  0]
+ [ 0  0  0  1  0  0  2  0  0  0  1  0  0  1  0  3  0  0  0 52  0  0  0  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0 59  0  0  0
+   0  0]
+ [ 0  0  0  2  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  1 56  0  0
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  2  0 57  0
+   0  0]
+ [ 0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 59
+   0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+  60  0]
+ [ 0  0  1  0  2  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  2  0  0
+   0 55]]
+Accuracy = 0.9429121231558691
+
