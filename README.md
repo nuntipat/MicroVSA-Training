@@ -1,14 +1,42 @@
-# VSALUT Model Training
+# VSALUT
 
-This repository provides the official implementation for the paper "VSALUT: A Lightweight Low-Dimensional VSA Classifier for Efficient Inference on FPGA". It extends the [MicroVSA](https://github.com/nuntipat/MicroVSA-Training) training code to support the LUT approximation and pruning techniques proposed in the VSALUT paper. Additionally, it includes scripts to generate Verilog code for seamless deployment on FPGA hardware.
+This repository provides the official implementation for the paper "VSALUT: A Lightweight Low-Dimensional VSA Classifier for Efficient Inference on FPGA". It extends the [MicroVSA](https://github.com/nuntipat/MicroVSA) training code to support the LUT approximation and pruning techniques proposed in the VSALUT paper. Additionally, it includes scripts to generate Verilog code for seamless deployment on FPGA hardware.
 
 ## Prerequisite
 
 - Python >=3.8
 - virtualenv
-- Nvidia GPU (optional but recommended)
+- Nvidia GPU (optional but recommended for model training)
 
-## Dataset Preparation
+## Basic Usage
+
+1. Create a Python virtual environment and install all dependencies
+
+    ```
+    $ virtualenv -p python3 venv
+    $ source venv/bin/activate
+    $ pip install -r requirements_minimal.txt
+    ```
+
+2. Generate sourcecode for MCU/FPGA deployment (pretrained models are available only for VSALUT)
+
+    For MCU deployment (MicroVSA)
+    
+    ```bash
+    # run `python model_converter.py -h` to view all options
+    $ python model_converter.py -i result/har_d64_1 -o result/har_d64_1 -n har -dv 8
+    ```
+
+    For FPGA deployment (VSALUT)
+
+    ```bash
+    # run `python model_converter.py -h` to view all options
+    $ python generate_verilog.py -i pretrained_model/mnist_i -o output_verilog -n mnist_i
+    ```
+
+## Train your own model
+
+### Dataset Preparation
 
 > [!NOTE]
 > To aid in the artifact evaluation process, we temporarily made all datasets available at this [link](https://igatcoth-my.sharepoint.com/:u:/g/personal/nuntipat_igat_co_th/Edn02ELWPXVDoNHeq1JvndUBbYfHTu5jntelX_oqn6gqnw?e=n0feYQ). Simply download and replace the data directory with the version in the zip file, and skip the `prepare_dataset.sh` script.
@@ -75,7 +103,7 @@ data/
         ...
 ```
 
-## Usage
+### Training and code generation
 
 1. Create a Python virtual environment and install all dependencies
 
